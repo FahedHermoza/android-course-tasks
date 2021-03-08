@@ -1,6 +1,7 @@
 # Android Course Tasks
 Tareas del curso Android con Kotlin 
- [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-by-codebabes.svg)](https://forthebadge.com)
+
+[![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com)[![forthebadge](https://forthebadge.com/images/badges/built-by-codebabes.svg)](https://forthebadge.com)
 
 ## Fragments
 [ProductKotlinApp](https://github.com/FahedHermoza/android-course-tasks/tree/main/ProductKotlinApp): Construido con fragments, extensions y callbacks.
