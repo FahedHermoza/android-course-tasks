@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">KotlinApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Product -->
+    <string name="tittle_students_fragment">Lista de Estudiantes</string>
+    <string name="name_student_item">Fahed</string>
+    <string name="phone_title_student_item">Celular</string>
+    <string name="phone_student_item">987654321</string>
+    <string name="email_title_student_item">Correo</string>
+    <string name="email_student_item">correo@gmai.com</string>
+    <string name="website_title_student_item">Sitio Web</string>
+    <string name="website_student_item">www.google.com</string>
+    </resources>

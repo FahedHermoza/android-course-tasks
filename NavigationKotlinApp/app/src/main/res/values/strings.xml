@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KotlinApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_web_fragment">web</string>
+    <string name="text_shopping_fragment">shopping</string>
+    <string name="text_video_fragment">video</string>
+</resources>
