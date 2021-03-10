@@ -7,18 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.emedinaa.kotlinapp.databinding.FragmentAddProductBinding
 import com.emedinaa.kotlinapp.di.Injector
-import com.emedinaa.kotlinapp.dominio.usecase.AddProductUserCase
+import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
 import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModelFactory
 
 class AddProductFragment : Fragment() {
 
     private val viewModel by viewModels<AddProductViewModel>{
-        AddProductViewModelFactory(AddProductUserCase(Injector.provideProductRepository()))
+        AddProductViewModelFactory(AddProductUseCase(Injector.provideProductRepository()))
     }
 
     private var _binding: FragmentAddProductBinding? = null

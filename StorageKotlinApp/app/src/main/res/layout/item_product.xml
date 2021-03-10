@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
-            tools:text="@string/name_products_item" />
+            tools:text="@string/title_add_product_fragment" />
 
         <TextView
             android:id="@+id/tvCost"
@@ -38,6 +38,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
-            tools:text="@string/cost_products_item" />
+            tools:text="@string/cost_add_product_fragment" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

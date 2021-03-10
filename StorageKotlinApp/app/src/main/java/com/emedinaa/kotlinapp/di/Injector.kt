@@ -5,7 +5,7 @@ import com.emedinaa.kotlinapp.data.ProductDatabaseRepository
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
 import com.emedinaa.kotlinapp.data.storage.db.ProductDatabase
 import com.emedinaa.kotlinapp.data.storage.db.ProductDatabaseDataSource
-import com.emedinaa.kotlinapp.dominio.ProductRepository
+import com.emedinaa.kotlinapp.domain.ProductRepository
 
 /**
  * @author Eduardo Medina

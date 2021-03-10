@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.dominio.model
+package com.emedinaa.kotlinapp.domain.model
 
 import java.io.Serializable
 

@@ -1,7 +1,7 @@
 package com.emedinaa.kotlinapp.data
 
 import com.emedinaa.kotlinapp.data.storage.db.DBProduct
-import com.emedinaa.kotlinapp.dominio.model.Product
+import com.emedinaa.kotlinapp.domain.model.Product
 
 /**
  * @author Eduardo Medina

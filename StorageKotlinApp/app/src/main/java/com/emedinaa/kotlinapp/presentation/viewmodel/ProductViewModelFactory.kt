@@ -2,21 +2,20 @@ package com.emedinaa.kotlinapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.emedinaa.kotlinapp.dominio.usecase.AddProductUserCase
-import com.emedinaa.kotlinapp.dominio.usecase.ClearProductUserCase
-import com.emedinaa.kotlinapp.dominio.usecase.FetchProductUserCase
+import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
 
 /**
  * @author Eduardo Medina
  */
-class ProductViewModelFactory(private val fetchProductUserCase: FetchProductUserCase,
-                              private val clearProductUserCase: ClearProductUserCase
+class ProductViewModelFactory(private val fetchProductUseCase: FetchProductUseCase,
+                              private val clearProductUseCase: ClearProductUseCase
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return ProductViewModel(
-            fetchProductUserCase,
-            clearProductUserCase
+            fetchProductUseCase,
+            clearProductUseCase
         ) as T
     }
 }

@@ -1,8 +1,7 @@
-package com.emedinaa.kotlinapp.dominio
+package com.emedinaa.kotlinapp.domain
 
 import androidx.lifecycle.LiveData
-import com.emedinaa.kotlinapp.data.storage.StorageResult
-import com.emedinaa.kotlinapp.dominio.model.Product
+import com.emedinaa.kotlinapp.domain.model.Product
 
 interface ProductRepository {
     fun getAllProducts(): LiveData<List<Product>>

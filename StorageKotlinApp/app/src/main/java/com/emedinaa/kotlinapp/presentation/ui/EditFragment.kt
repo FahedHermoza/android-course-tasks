@@ -8,20 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.emedinaa.kotlinapp.databinding.FragmentEditBinding
-import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.di.Injector
-import com.emedinaa.kotlinapp.dominio.model.Product
-import com.emedinaa.kotlinapp.dominio.usecase.AddProductUserCase
-import com.emedinaa.kotlinapp.dominio.usecase.UpdateProductUserCase
-import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModel
-import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModelFactory
+import com.emedinaa.kotlinapp.domain.model.Product
+import com.emedinaa.kotlinapp.domain.usecase.UpdateProductUseCase
 import com.emedinaa.kotlinapp.presentation.viewmodel.EditProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.EditProductViewModelFactory
 
 class EditFragment : Fragment() {
 
     private val viewModel by viewModels<EditProductViewModel>{
-        EditProductViewModelFactory(UpdateProductUserCase(Injector.provideProductRepository()))
+        EditProductViewModelFactory(UpdateProductUseCase(Injector.provideProductRepository()))
     }
 
     private var _binding: FragmentEditBinding? = null

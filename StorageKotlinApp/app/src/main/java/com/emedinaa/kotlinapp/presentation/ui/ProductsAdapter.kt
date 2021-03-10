@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emedinaa.kotlinapp.databinding.ItemProductBinding
-import com.emedinaa.kotlinapp.dominio.model.Product
+import com.emedinaa.kotlinapp.domain.model.Product
 
 /***
  * https://medium.com/swlh/how-to-use-view-binding-in-recyclerview-adapter-f818b96c678a

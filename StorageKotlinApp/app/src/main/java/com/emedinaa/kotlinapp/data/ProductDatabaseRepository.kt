@@ -3,9 +3,8 @@ package com.emedinaa.kotlinapp.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
-import com.emedinaa.kotlinapp.data.storage.StorageResult
-import com.emedinaa.kotlinapp.dominio.ProductRepository
-import com.emedinaa.kotlinapp.dominio.model.Product
+import com.emedinaa.kotlinapp.domain.ProductRepository
+import com.emedinaa.kotlinapp.domain.model.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

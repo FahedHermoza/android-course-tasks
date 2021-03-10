@@ -10,12 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.di.Injector
-import com.emedinaa.kotlinapp.dominio.model.Product
-import com.emedinaa.kotlinapp.dominio.usecase.AddProductUserCase
-import com.emedinaa.kotlinapp.dominio.usecase.ClearProductUserCase
-import com.emedinaa.kotlinapp.dominio.usecase.FetchProductUserCase
-import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModel
-import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModelFactory
+import com.emedinaa.kotlinapp.domain.model.Product
+import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModelFactory
 
@@ -24,8 +21,8 @@ class ProductFragment : Fragment() {
 
     private val viewModel by viewModels<ProductViewModel>{
         ProductViewModelFactory(
-            FetchProductUserCase(Injector.provideProductRepository()),
-            ClearProductUserCase(Injector.provideProductRepository())
+            FetchProductUseCase(Injector.provideProductRepository()),
+            ClearProductUseCase(Injector.provideProductRepository())
         )
     }
 

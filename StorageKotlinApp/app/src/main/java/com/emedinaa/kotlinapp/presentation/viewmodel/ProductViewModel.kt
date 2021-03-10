@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.emedinaa.kotlinapp.R
-import com.emedinaa.kotlinapp.dominio.model.Product
-import com.emedinaa.kotlinapp.dominio.usecase.ClearProductUserCase
-import com.emedinaa.kotlinapp.dominio.usecase.FetchProductUserCase
+import com.emedinaa.kotlinapp.domain.model.Product
+import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
 import kotlinx.coroutines.launch
 
-class ProductViewModel(private val fetchProductUserCase: FetchProductUserCase,
-                       private val clearProductUserCase: ClearProductUserCase
+class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
+                       private val clearProductUseCase: ClearProductUseCase
 ): ViewModel() {
 
     private val _products = MutableLiveData <LiveData<List<Product>>>()
@@ -21,9 +20,9 @@ class ProductViewModel(private val fetchProductUserCase: FetchProductUserCase,
         loadProducts()
     }
 
-    fun loadProducts():LiveData<List<Product>> = fetchProductUserCase.invoke()
+    fun loadProducts():LiveData<List<Product>> = fetchProductUseCase.invoke()
 
     fun deleteAllProducts() = viewModelScope.launch {
-        clearProductUserCase.invoke()
+        clearProductUseCase.invoke()
     }
 }

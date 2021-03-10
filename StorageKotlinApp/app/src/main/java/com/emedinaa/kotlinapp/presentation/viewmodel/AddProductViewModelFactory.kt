@@ -2,14 +2,14 @@ package com.emedinaa.kotlinapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.emedinaa.kotlinapp.dominio.usecase.AddProductUserCase
+import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
 
 /**
  * @author Eduardo Medina
  */
-class AddProductViewModelFactory(private val addProductUserCase: AddProductUserCase): ViewModelProvider.Factory {
+class AddProductViewModelFactory(private val addProductUseCase: AddProductUseCase): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return AddProductViewModel(addProductUserCase) as T
+        return AddProductViewModel(addProductUseCase) as T
     }
 }
