@@ -1,8 +1,8 @@
-package com.emedinaa.kotlinapp.domain.usecase
+package com.emedinaa.kotlinapp.domain.usecase.user
 
 import com.emedinaa.kotlinapp.domain.AuthenticationRepository
 
-class AuthenticateUseCase(private val authenticationRepository: AuthenticationRepository) {
+class AuthenticateUserUseCase(private val authenticationRepository: AuthenticationRepository) {
 
     suspend operator fun invoke(username: String?, password: String?) = run{
         authenticationRepository.login(username, password)

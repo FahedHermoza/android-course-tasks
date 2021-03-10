@@ -3,8 +3,9 @@ package com.emedinaa.kotlinapp.presentation.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.databinding.ItemProductBinding
-import com.emedinaa.kotlinapp.dominio.model.Product
+import com.emedinaa.kotlinapp.domain.model.Product
 
 /***
  * https://medium.com/swlh/how-to-use-view-binding-in-recyclerview-adapter-f818b96c678a
@@ -24,7 +25,7 @@ class ProductsAdapter(private var products:List<Product>,
             with(products[position]) {
                 binding.tvName.text = name
                 binding.tvCost.text = "S./ $cost"
-                binding.ivLogo.setImageResource(logo)
+                binding.ivLogo.setImageResource(R.mipmap.ic_funko)
 
                 binding.root.setOnClickListener {
                     itemAction(this)

@@ -1,60 +1,133 @@
 package com.emedinaa.kotlinapp.presentation.ui
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.emedinaa.kotlinapp.R
+import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
+import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
+import com.emedinaa.kotlinapp.di.Injector
+import com.emedinaa.kotlinapp.domain.model.Product
+import com.emedinaa.kotlinapp.domain.usecase.product.FetchProductUseCase
+import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
+import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProductFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProductFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private val viewModel by viewModels<ProductViewModel>{
+        ProductViewModelFactory(
+            FetchProductUseCase(Injector.provideRemoteProductRepository())
+        )
+    }
+
+    private var _binding: FragmentProductBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var adapter: ProductsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product, container, false)
+        _binding = FragmentProductBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProductFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fabProduct.setOnClickListener {
+            goToAddProduct()
+        }
+
+        setupView()
+        setObservers()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    private fun goToAddProduct() {
+        findNavController().navigate(R.id.action_productFragment_to_addProductFragment)
+    }
+
+    private fun setupView() {
+        viewModel.loadProducts()
+
+        adapter = ProductsAdapter(emptyList(), onItemAction())
+        binding.rvProduct.adapter = adapter
+    }
+
+    private fun onItemAction(): (item: Product) -> Unit {
+        return {
+            goToEditProduct(it)
+        }
+    }
+
+    private fun goToEditProduct(product: Product) {
+        findNavController().navigate(R.id.action_productFragment_to_editProductFragment, Bundle().apply {
+            putSerializable("PRODUCT", product)
+        })
+    }
+
+    private fun setObservers(){
+        viewModel.onError.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                showMessage(it)
+            }
+        })
+
+        viewModel.onProducts.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it.isEmpty()) {
+                    binding.imageViewEmpty.visibility = View.VISIBLE
+                } else {
+                    binding.imageViewEmpty.visibility = View.GONE
+                    adapter.update(it)
                 }
             }
+        })
+    }
+
+    private fun showMessage(message: String) {
+        view?.let {
+            Snackbar.make(it, message, Snackbar.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        return inflater.inflate(R.menu.menu_product, menu);
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.action_all_delete){
+            //viewModel.deleteAllProducts()
+            showToast("Productos eliminados")
+        }
+        return false
+    }
+
+    private fun showToast(string: String) {
+        Toast.makeText(context, string, Toast.LENGTH_LONG).show()
     }
 }

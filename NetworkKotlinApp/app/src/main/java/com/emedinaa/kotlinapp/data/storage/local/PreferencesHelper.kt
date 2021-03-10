@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.storage.local
+package com.emedinaa.kotlinapp.data.storage.local
 
 import android.content.Context
 import android.content.SharedPreferences

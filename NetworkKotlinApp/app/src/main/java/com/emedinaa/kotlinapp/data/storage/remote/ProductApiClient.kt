@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.storage.remote
+package com.emedinaa.kotlinapp.data.remote
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-object NoteApiClient {
+object ProductApiClient {
 
     private const val API_BASE_URL = "https://api.backendless.com/"
     private var servicesApiInterface: ServicesApiInterface? = null
@@ -47,13 +47,13 @@ object NoteApiClient {
                     @Body raw: LogInRaw
         ): Response<LogInResponse>
 
-        //https://api.backendless.com/7FBB8DC0-4C21-0178-FF76-367F7D30DC00/E5214A86-653A-529C-FF73-95B4DD4F8C00/data/Note
-        @GET("/{applicationid}/{restapikey}/data/Note")
-        suspend fun notes(@Path("applicationid") appID:String,
+        //https://api.backendless.com/10D59C7B-6F06-9680-FF6F-D14965C63800/033EA8E0-7219-480B-B934-3F176D26DA7F/data/Product
+        @GET("/{applicationid}/{restapikey}/data/Product")
+        suspend fun products(@Path("applicationid") appID:String,
                   @Path("restapikey") restApiKEY:String,
-                  @HeaderMap headers:Map<String,String>?): Response<List<NoteDTO>>
+                  @HeaderMap headers:Map<String,String>?): Response<List<ProductDTO>>
 
-
+/*
         //Create Note
         //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>
         @POST("/{applicationid}/{restapikey}/data/Note")
@@ -74,7 +74,7 @@ object NoteApiClient {
         @PUT("/{applicationid}/{restapikey}/data/Note/{objectId}")
         suspend fun updateNote(@Path("applicationid") appID:String,
                        @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                       @Path("objectId")objectId:String?,@Body raw: NoteRaw?): Response<NoteResponse>
+                       @Path("objectId")objectId:String?,@Body raw: NoteRaw?): Response<NoteResponse> */
 
     }
 }

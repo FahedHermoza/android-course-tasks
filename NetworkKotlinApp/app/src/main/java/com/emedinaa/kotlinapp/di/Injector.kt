@@ -1,11 +1,15 @@
 package com.emedinaa.kotlinapp.di
 
 import android.content.Context
-import com.emedinaa.kotlinapp.storage.*
-import com.emedinaa.kotlinapp.storage.local.PreferencesHelper
-import com.emedinaa.kotlinapp.storage.remote.AuthenticationRemoteDataSource
-import com.emedinaa.kotlinapp.storage.remote.NoteApiClient
-import com.emedinaa.kotlinapp.storage.remote.NoteRemoteDataSource
+import com.emedinaa.kotlinapp.data.ProductRemoteRepository
+import com.emedinaa.kotlinapp.data.storage.AuthenticationRemoteRepository
+import com.emedinaa.kotlinapp.data.remote.AuthenticationDataSource
+import com.emedinaa.kotlinapp.data.remote.AuthenticationRemoteDataSource
+import com.emedinaa.kotlinapp.data.remote.ProductApiClient
+import com.emedinaa.kotlinapp.data.storage.ProductDataSource
+import com.emedinaa.kotlinapp.data.storage.local.PreferencesHelper
+import com.emedinaa.kotlinapp.data.storage.remote.ProductRemoteDataSource
+import com.emedinaa.kotlinapp.domain.ProductRepository
 
 /**
  * @author Eduardo Medina
@@ -13,9 +17,10 @@ import com.emedinaa.kotlinapp.storage.remote.NoteRemoteDataSource
 object Injector {
 
     private lateinit var preferences:PreferencesHelper
-    private val remoteDataSource:RemoteDataSource = NoteRemoteDataSource(NoteApiClient.getInstance())
-    private val noteRemoteRepository: NoteRemoteRepository = NoteRemoteRepository(remoteDataSource)
-    private val authenticationDataSource:AuthenticationDataSource = AuthenticationRemoteDataSource(NoteApiClient.getInstance())
+    private val remoteDataSource: ProductDataSource = ProductRemoteDataSource(ProductApiClient.getInstance())
+    private val productRemoteRepository: ProductRepository = ProductRemoteRepository(remoteDataSource)
+    private val authenticationDataSource: AuthenticationDataSource = AuthenticationRemoteDataSource(
+        ProductApiClient.getInstance())
     private val authenticationRemoteRepository: AuthenticationRemoteRepository =
         AuthenticationRemoteRepository(authenticationDataSource)
 
@@ -23,7 +28,7 @@ object Injector {
         preferences = PreferencesHelper(context)
     }
 
-    fun provideRemoteNoteRepository() = noteRemoteRepository
+    fun provideRemoteProductRepository() = productRemoteRepository
     fun provideRemoteAuthenticationRepository() = authenticationRemoteRepository
     fun providePreferences() = preferences
 

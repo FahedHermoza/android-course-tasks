@@ -1,4 +1,4 @@
-package com.emedinaa.kotlinapp.storage
+package com.emedinaa.kotlinapp.data
 
 sealed class StorageResult<out T> {
     data class Success<T>(val data: List<T>?) : StorageResult<T>()
