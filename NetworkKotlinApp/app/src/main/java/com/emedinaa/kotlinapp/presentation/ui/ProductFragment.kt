@@ -67,6 +67,7 @@ class ProductFragment : Fragment() {
 
     private fun setupView() {
         viewModel.loadProducts()
+        showProgressBar()
 
         adapter = ProductsAdapter(emptyList(), onItemAction())
         binding.rvProduct.adapter = adapter
@@ -89,6 +90,7 @@ class ProductFragment : Fragment() {
             it?.let {
                 showMessage(it)
             }
+            hideProgressBar()
         })
 
         viewModel.onProducts.observe(viewLifecycleOwner, Observer {
@@ -100,6 +102,7 @@ class ProductFragment : Fragment() {
                     adapter.update(it)
                 }
             }
+            hideProgressBar()
         })
     }
 
@@ -129,5 +132,13 @@ class ProductFragment : Fragment() {
 
     private fun showToast(string: String) {
         Toast.makeText(context, string, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showProgressBar(){
+        binding.pbProducts.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar(){
+        binding.pbProducts.visibility = View.GONE
     }
 }

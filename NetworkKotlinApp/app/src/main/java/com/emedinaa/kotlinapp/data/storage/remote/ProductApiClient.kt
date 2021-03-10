@@ -53,28 +53,27 @@ object ProductApiClient {
                   @Path("restapikey") restApiKEY:String,
                   @HeaderMap headers:Map<String,String>?): Response<List<ProductDTO>>
 
-/*
         //Create Note
         //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>
-        @POST("/{applicationid}/{restapikey}/data/Note")
-        suspend fun addNote(@Path("applicationid") appID:String,
-                    @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                    @Body raw: NoteRaw
-        ): Response<NoteResponse>
-
+        @POST("/{applicationid}/{restapikey}/data/Product")
+        suspend fun addProduct(@Path("applicationid") appID:String,
+                            @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
+                            @Body raw: ProductRaw
+        ): Response<ProductResponse>
+        /*
         //Delete Note
         //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>/<object-id>
-        @DELETE("/{applicationid}/{restapikey}/data/Note/{objectId}")
-        suspend fun deleteNote(@Path("applicationid") appID:String,
-                       @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                       @Path("objectId") objectId:String?): Response<NoteResponse>
-
+        @DELETE("/{applicationid}/{restapikey}/data/Product/{objectId}")
+        suspend fun deleteProduct(@Path("applicationid") appID:String,
+                               @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
+                               @Path("objectId") objectId:String?): Response<ProductResponse>
+*/
         //Update Note
         //https://api.backendless.com/<application-id>/<REST-api-key>/data/<table-name>/<object-id>
-        @PUT("/{applicationid}/{restapikey}/data/Note/{objectId}")
-        suspend fun updateNote(@Path("applicationid") appID:String,
+        @PUT("/{applicationid}/{restapikey}/data/Product/{objectId}")
+        suspend fun updateProduct(@Path("applicationid") appID:String,
                        @Path("restapikey") restApiKEY:String,@HeaderMap headers:Map<String,String>?,
-                       @Path("objectId")objectId:String?,@Body raw: NoteRaw?): Response<NoteResponse> */
+                       @Path("objectId")objectId:String?,@Body raw: ProductRaw?): Response<ProductResponse>
 
     }
 }

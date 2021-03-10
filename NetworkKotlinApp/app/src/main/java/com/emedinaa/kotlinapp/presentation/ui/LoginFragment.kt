@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
+import com.emedinaa.kotlinapp.presentation.UtilsAlertDialog
 import com.emedinaa.kotlinapp.presentation.viewmodel.LoginViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.LoginViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -30,6 +32,10 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
+    private val dialog: AlertDialog by lazy {
+        UtilsAlertDialog.setProgressDialog(requireContext(), "Loading..")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -44,6 +50,7 @@ class LoginFragment : Fragment() {
         return view
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
@@ -51,6 +58,7 @@ class LoginFragment : Fragment() {
         binding.textInputLayoutUser.editText?.setText("admin@admin.com")
         binding.buttonLogin.setOnClickListener {
             if(validateForm()){
+                showAlertProgress()
                 viewModel.login(
                     binding.textInputLayoutUser.editText?.text.toString(),
                     binding.textInputLayoutPassword.editText?.text.toString()
@@ -75,12 +83,15 @@ class LoginFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.onError.observe(viewLifecycleOwner, Observer {
+            hideAlertProgress()
             it?.let {
                 showMessage(it)
             }
+
         })
 
         viewModel.onSuccess.observe(viewLifecycleOwner, Observer {
+            hideAlertProgress()
             it?.let {
                 gotoProduct(it)
             }
@@ -103,5 +114,13 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showAlertProgress(){
+        dialog.show()
+    }
+
+    private fun hideAlertProgress(){
+        dialog.hide()
     }
 }

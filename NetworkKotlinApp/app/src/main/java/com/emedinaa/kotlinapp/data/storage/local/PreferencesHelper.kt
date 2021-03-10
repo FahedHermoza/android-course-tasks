@@ -11,12 +11,13 @@ class PreferencesHelper(private val context: Context) {
     private val MY_NOTES_PREFERENCES = "com.emedinaa.kotlinapp"
     private val PREFERENCES_USERNAME = "$MY_NOTES_PREFERENCES.username"
     private val PREFERENCES_TOKEN = "$MY_NOTES_PREFERENCES.token"
+    private val PREFERENCES_OBJECT_ID = "$MY_NOTES_PREFERENCES.objectId"
 
-
-    fun saveSession(username: String,token:String) {
+    fun saveSession(username: String,token:String, objectId:String) {
         val editor = getEditor()
         editor.putString(PREFERENCES_USERNAME, username)
         editor.putString(PREFERENCES_TOKEN, token)
+        editor.putString(PREFERENCES_OBJECT_ID, objectId)
         editor.apply()
     }
 
@@ -24,6 +25,12 @@ class PreferencesHelper(private val context: Context) {
         val sharedPreferences = getSharedPreferences()
         return sharedPreferences.getString(PREFERENCES_TOKEN, null)
     }
+
+    fun objectId(): String? {
+        val sharedPreferences = getSharedPreferences()
+        return sharedPreferences.getString(PREFERENCES_OBJECT_ID, null)
+    }
+
 
     fun isSignedIn(): Boolean {
         val preferences = getSharedPreferences()
@@ -34,6 +41,7 @@ class PreferencesHelper(private val context: Context) {
         val editor = getEditor()
         editor.remove(PREFERENCES_USERNAME)
         editor.remove(PREFERENCES_TOKEN)
+        editor.remove(PREFERENCES_OBJECT_ID)
         editor.apply()
     }
 

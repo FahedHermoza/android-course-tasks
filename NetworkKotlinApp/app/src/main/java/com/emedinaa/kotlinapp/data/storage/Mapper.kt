@@ -20,19 +20,8 @@ object Mapper {
         productDTO.objectId?:"", productDTO.name?:"", productDTO.description?:"",
         productDTO.cost?:0.0, productDTO.logo?:"", productDTO.code?:""
     )
-    /*
-    fun dbProductToProduct(dbProduct: DBProduct):Product = Product(dbProduct.id?:0,dbProduct.name?:"",
-        dbProduct.cost?:0.0, dbProduct.description?: "", dbProduct.logo?:0
-    )
 
-    fun productToDbProduct(product: Product):DBProduct = DBProduct(product.id,product.name,
-         product.description,product.cost, product.logo)
-
-    fun mapDBProductListToProductList(dbProductList:List<DBProduct>):List<Product>{
-        return  dbProductList.map {
-            Product(it.id?:0,it.name?:"",it.cost?:0.0,
-                it.description?:"", it.logo?:0)
-        }
-    }*/
+    fun productToProductDTO(product: Product):ProductDTO = ProductDTO(product.objectId,product.name,
+         product.description,product.cost, product.logo, product.code)
 
 }

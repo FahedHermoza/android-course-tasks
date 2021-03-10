@@ -20,7 +20,7 @@ class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseC
         when(val result =authenticationUserUseCase.invoke(username,password)){
             is StorageResult.Complete -> {
                 result.data?.let { itUser->
-                    Injector.providePreferences().saveSession(itUser.email,itUser.token)
+                    Injector.providePreferences().saveSession(itUser.email,itUser.token, itUser.objectId)
                     onSuccess.value = itUser
                 }
             }

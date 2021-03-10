@@ -26,7 +26,11 @@ data class LogInResponse(@SerializedName("user-token") val token:String?,
 
 //Note
 data class ProductRaw(
-    val title:String?, val description:String?
+    val name:String?,
+    val description:String?,
+    val cost:Double?,
+    val logo:String?,
+    val code:String?
 )
 
 //@SerializedName("name")

@@ -1,5 +1,6 @@
 package com.emedinaa.kotlinapp.data
 
+import com.emedinaa.kotlinapp.data.remote.ProductDTO
 import com.emedinaa.kotlinapp.data.storage.Mapper
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
 import com.emedinaa.kotlinapp.domain.ProductRepository
@@ -19,6 +20,32 @@ class ProductRemoteRepository (private val dataSource: ProductDataSource): Produ
             is StorageResult.Failure -> StorageResult.Failure(result.exception)
             else -> StorageResult.UnAuthorized(Exception())
         }
+    }
+
+    override suspend fun add(token: String?, product: Product): StorageResult<Product> = withContext(Dispatchers.IO) {
+        when (val result = dataSource.save(token, Mapper.productToProductDTO(product))) {
+            is StorageResult.Complete ->
+                StorageResult.Complete(result.data?.let {
+                    Mapper.productDTOToProduct(it)
+                })
+            is StorageResult.Failure -> StorageResult.Failure(result.exception)
+            else -> StorageResult.UnAuthorized(Exception())
+        }
+    }
+
+    override suspend fun update(token: String?, product: Product): StorageResult<Product> = withContext(Dispatchers.IO) {
+        when (val result = dataSource.update(token, Mapper.productToProductDTO(product))) {
+            is StorageResult.Complete ->
+                StorageResult.Complete(result.data?.let {
+                    Mapper.productDTOToProduct(it)
+                })
+            is StorageResult.Failure -> StorageResult.Failure(result.exception)
+            else -> StorageResult.UnAuthorized(Exception())
+        }
+    }
+
+    override suspend fun delete(token: String?, product: Product): StorageResult<Product> {
+        TODO("Not yet implemented")
     }
 
 }
