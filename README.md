@@ -13,3 +13,6 @@ Tareas del curso Android con Kotlin
 
 ## Storage
 [StorageKotlinApp](https://github.com/FahedHermoza/android-course-tasks/tree/main/StorageKotlinApp): Construido con arquitectura Clean, patron MVVM y algunas librerias (navigation, room, coroutines, livedata, lifecycle).
+
+## Networking
+[NetworkKotlinApp](https://github.com/FahedHermoza/android-course-tasks/tree/main/NetworkKotlinApp): Construido con arquitectura Clean, patron MVVM y algunas librerias (navigation, retrofit, preferences, coroutines, livedata, lifecycle).
