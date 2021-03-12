@@ -38,6 +38,11 @@ class ProductsAdapter(private var products:List<Product>,
         return products.size
     }
 
+    fun clear(){
+        products = emptyList()
+        notifyDataSetChanged()
+    }
+
     fun update(data:List<Product>){
         products = data
         notifyDataSetChanged()

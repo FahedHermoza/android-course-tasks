@@ -1,5 +1,6 @@
 package com.emedinaa.kotlinapp.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class AddProductViewModel(private val addProductUseCase: AddProductUseCase): ViewModel() {
     val _onError = MutableLiveData<String>()
-    val onError = _onError
+    val onError: LiveData<String> = _onError
 
     val onSuccess = SingleLiveEvent<Product>()
 

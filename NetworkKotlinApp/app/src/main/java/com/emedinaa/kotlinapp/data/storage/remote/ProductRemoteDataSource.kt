@@ -1,10 +1,8 @@
 package com.emedinaa.kotlinapp.data.storage.remote
 
+import android.util.Log
 import com.emedinaa.kotlinapp.data.StorageResult
-import com.emedinaa.kotlinapp.data.remote.ProductApiClient
-import com.emedinaa.kotlinapp.data.remote.ProductConstant
-import com.emedinaa.kotlinapp.data.remote.ProductDTO
-import com.emedinaa.kotlinapp.data.remote.ProductRaw
+import com.emedinaa.kotlinapp.data.remote.*
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
 
 class ProductRemoteDataSource(apiClient: ProductApiClient): ProductDataSource {
@@ -88,7 +86,51 @@ class ProductRemoteDataSource(apiClient: ProductApiClient): ProductDataSource {
         }
     }
 
-    override suspend fun delete(token: String?, product: ProductDTO): StorageResult<ProductDTO> {
-        TODO("Not yet implemented")
+    override suspend fun delete(token:String?, product: ProductDTO): StorageResult<DeleteDTO> {
+        val map:MutableMap<String,String> = mutableMapOf()
+        token?.let {
+            map["user-token"] =it
+        }
+        return try {
+            val response = serviceApi?.deleteProduct(ProductConstant.APPLICATION_ID, ProductConstant.REST_API_KEY,map,product.objectId)
+
+            response?.let {
+                if (it.isSuccessful && it.body() != null) {
+                    val data = it.body()
+                    StorageResult.Complete(DeleteDTO(data?.deletionTime))
+                } else {
+                    StorageResult.Failure(Exception(it.errorBody()?.string()))
+                }
+            } ?: run {
+                StorageResult.Failure(Exception("Ocurrió un error"))
+            }
+        } catch (e: Exception) {
+            StorageResult.Failure(e)
+        }
+    }
+
+    override suspend fun deleteAll(token: String?, minimalCost: Double?): StorageResult<Int> {
+        val map: MutableMap<String, String> = mutableMapOf()
+        token?.let {
+            map["user-token"] = it
+        }
+        return try {
+            var where: String  = "cost > $minimalCost"
+            val response = serviceApi?.deleteProducts(ProductConstant.APPLICATION_ID,
+                    ProductConstant.REST_API_KEY, map, where
+            )
+
+            response?.let {
+                if (it.isSuccessful && it.body() != null) {
+                    StorageResult.Complete(it.body()?:0)
+                } else {
+                    StorageResult.Failure(Exception(it.errorBody()?.string()))
+                }
+            } ?: run {
+                StorageResult.Failure(Exception("Ocurrió un error"))
+            }
+        } catch (e: Exception) {
+            StorageResult.Failure(e)
+        }
     }
 }

@@ -12,6 +12,7 @@ import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.Product
+import com.emedinaa.kotlinapp.domain.usecase.product.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.product.FetchProductUseCase
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModelFactory
@@ -19,9 +20,10 @@ import com.google.android.material.snackbar.Snackbar
 
 class ProductFragment : Fragment() {
 
-    private val viewModel by viewModels<ProductViewModel>{
+    private val viewModel by viewModels<ProductViewModel> {
         ProductViewModelFactory(
-            FetchProductUseCase(Injector.provideRemoteProductRepository())
+                FetchProductUseCase(Injector.provideRemoteProductRepository()),
+                ClearProductUseCase(Injector.provideRemoteProductRepository())
         )
     }
 
@@ -54,11 +56,6 @@ class ProductFragment : Fragment() {
 
         setupView()
         setObservers()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     private fun goToAddProduct() {
@@ -104,6 +101,22 @@ class ProductFragment : Fragment() {
             }
             hideProgressBar()
         })
+
+        viewModel.onProductEmpty.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) {
+                    adapter.clear()
+                    viewModel.loadProducts()
+                }
+            }
+            hideProgressBar()
+        })
+
+        viewModel.onSuccessDeleteAll.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                showMessage(it)
+            }
+        })
     }
 
     private fun showMessage(message: String) {
@@ -124,8 +137,8 @@ class ProductFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.action_all_delete){
-            //viewModel.deleteAllProducts()
-            showToast("Productos eliminados")
+            showProgressBar()
+            viewModel.deleteAllProducts()
         }
         return false
     }

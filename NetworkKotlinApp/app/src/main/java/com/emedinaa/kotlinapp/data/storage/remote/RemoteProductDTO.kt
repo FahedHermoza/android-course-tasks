@@ -24,7 +24,7 @@ data class LogInResponse(@SerializedName("user-token") val token:String?,
                          val objectId:String?
 )
 
-//Note
+//Product
 data class ProductRaw(
     val name:String?,
     val description:String?,
@@ -54,10 +54,18 @@ open class BaseResponse(private val status: Int?, val msg: String?) {
 }
 
 class ProductResponse(
-    val objectId:String?,
-    val name:String?,
-    val description:String?,
-    val cost:Double?,
-    val logo:String?,
-    val code:String?
+        @field:SerializedName("objectId") val objectId:String?,
+        @field:SerializedName("name") val name:String?,
+        @field:SerializedName("description") val description:String?,
+        @field:SerializedName("cost") val cost:Double?,
+        @field:SerializedName("logo") val logo:String?,
+        @field:SerializedName("code") val code:String?
+)
+
+class DeleteResponse(
+        val deletionTime: Long?
+)
+
+data class DeleteDTO(
+        val deletionTime: Long?
 )
