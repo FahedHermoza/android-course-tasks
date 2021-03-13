@@ -13,11 +13,13 @@ import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.product.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.product.FetchProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.GetSessionUseCase
 import com.emedinaa.kotlinapp.presentation.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
-                       private val clearProductUseCase: ClearProductUseCase): ViewModel() {
+                       private val clearProductUseCase: ClearProductUseCase,
+                       private val getSessionUseCase: GetSessionUseCase): ViewModel() {
     val _onError = MutableLiveData<String>()
     val onError: LiveData<String> = _onError
 
@@ -29,8 +31,11 @@ class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
 
     val onSuccessDeleteAll = SingleLiveEvent<String>()
 
+    private val token by lazy {
+        getSessionUseCase()?:""
+    }
+
     fun loadProducts() = viewModelScope.launch {
-        val token = Injector.providePreferences().session()?:""
         when (val result = fetchProductUseCase.invoke(token)) {
             is StorageResult.Success -> {
                 val notes = result.data ?: emptyList()
@@ -43,7 +48,6 @@ class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
     }
 
     fun deleteAllProducts()= viewModelScope.launch {
-        val token = Injector.providePreferences().session()?:""
         val minimalCost: Double = 0.0
         when (val result = clearProductUseCase.invoke(token, minimalCost)) {
             is StorageResult.Complete -> {

@@ -14,6 +14,7 @@ import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.SaveSessionUseCase
 import com.emedinaa.kotlinapp.presentation.UtilsAlertDialog
 import com.emedinaa.kotlinapp.presentation.viewmodel.LoginViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.LoginViewModelFactory
@@ -25,7 +26,8 @@ class LoginFragment : Fragment() {
         LoginViewModelFactory(
             AuthenticateUserUseCase(
                 Injector.provideRemoteAuthenticationRepository()
-            )
+            ),
+                SaveSessionUseCase(Injector.providePreferencesRepository())
         )
     }
 

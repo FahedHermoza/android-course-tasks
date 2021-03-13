@@ -8,19 +8,30 @@ import com.emedinaa.kotlinapp.data.StorageResult
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.usecase.product.AddProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.GetObjectIdUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.GetSessionUseCase
 import com.emedinaa.kotlinapp.presentation.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class AddProductViewModel(private val addProductUseCase: AddProductUseCase): ViewModel() {
+class AddProductViewModel(private val addProductUseCase: AddProductUseCase,
+                            private val getSessionUseCase: GetSessionUseCase,
+                            private val getObjectIdUseCase: GetObjectIdUseCase): ViewModel() {
     val _onError = MutableLiveData<String>()
     val onError: LiveData<String> = _onError
 
     val onSuccess = SingleLiveEvent<Product>()
 
+    private val token by lazy {
+        getSessionUseCase()?:""
+    }
+
+    private val objectId by lazy {
+        getObjectIdUseCase.invoke()?:""
+    }
+
     fun addProduct(title:String, cost:Double) = viewModelScope.launch {
-        val objectId = Injector.providePreferences().objectId()?:""
         val product = Product("", title, "", cost, "",objectId)
-        val token = Injector.providePreferences().session()?:""
+
         when(val result = addProductUseCase.invoke(token, product)){
             is StorageResult.Complete -> {
                 result.data?.let {

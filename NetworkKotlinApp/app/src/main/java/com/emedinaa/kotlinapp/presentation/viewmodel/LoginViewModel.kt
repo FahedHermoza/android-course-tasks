@@ -8,10 +8,12 @@ import com.emedinaa.kotlinapp.data.StorageResult
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.User
 import com.emedinaa.kotlinapp.domain.usecase.user.AuthenticateUserUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.SaveSessionUseCase
 import com.emedinaa.kotlinapp.presentation.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseCase): ViewModel() {
+class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseCase,
+                    private val saveSessionUseCase: SaveSessionUseCase): ViewModel() {
     val _onError = MutableLiveData<String>()
     val onError: LiveData<String> = _onError
 
@@ -21,7 +23,7 @@ class LoginViewModel(private val authenticationUserUseCase: AuthenticateUserUseC
         when(val result =authenticationUserUseCase.invoke(username,password)){
             is StorageResult.Complete -> {
                 result.data?.let { itUser->
-                    Injector.providePreferences().saveSession(itUser.email,itUser.token, itUser.objectId)
+                    saveSessionUseCase.invoke(itUser.email,itUser.token, itUser.objectId)
                     onSuccess.value = itUser
                 }
             }

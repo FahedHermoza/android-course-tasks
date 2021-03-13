@@ -14,6 +14,7 @@ import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.usecase.product.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.product.FetchProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.GetSessionUseCase
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +24,8 @@ class ProductFragment : Fragment() {
     private val viewModel by viewModels<ProductViewModel> {
         ProductViewModelFactory(
                 FetchProductUseCase(Injector.provideRemoteProductRepository()),
-                ClearProductUseCase(Injector.provideRemoteProductRepository())
+                ClearProductUseCase(Injector.provideRemoteProductRepository()),
+                GetSessionUseCase(Injector.providePreferencesRepository())
         )
     }
 

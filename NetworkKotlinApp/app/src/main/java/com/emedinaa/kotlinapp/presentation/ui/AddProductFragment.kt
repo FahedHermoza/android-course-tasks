@@ -15,6 +15,8 @@ import com.emedinaa.kotlinapp.databinding.FragmentLoginBinding
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.usecase.product.AddProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.GetObjectIdUseCase
+import com.emedinaa.kotlinapp.domain.usecase.user.GetSessionUseCase
 import com.emedinaa.kotlinapp.presentation.UtilsAlertDialog
 import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.AddProductViewModelFactory
@@ -24,7 +26,11 @@ import com.google.android.material.snackbar.Snackbar
 class AddProductFragment : Fragment() {
 
     private val viewModel by viewModels<AddProductViewModel>{
-        AddProductViewModelFactory(AddProductUseCase(Injector.provideRemoteProductRepository()))
+        AddProductViewModelFactory(
+                AddProductUseCase(Injector.provideRemoteProductRepository()),
+                GetSessionUseCase(Injector.providePreferencesRepository()),
+                GetObjectIdUseCase(Injector.providePreferencesRepository())
+        )
     }
 
     private var _binding: FragmentAddProductBinding? = null
