@@ -1,11 +1,10 @@
 package com.emedinaa.kotlinapp.data
 
-import com.emedinaa.kotlinapp.data.remote.ProductDTO
 import com.emedinaa.kotlinapp.data.storage.Mapper
 import com.emedinaa.kotlinapp.data.storage.ProductDataSource
 import com.emedinaa.kotlinapp.domain.ProductRepository
 import com.emedinaa.kotlinapp.domain.model.Delete
-import com.emedinaa.kotlinapp.domain.model.Deletes
+import com.emedinaa.kotlinapp.domain.model.MultipleDelete
 import com.emedinaa.kotlinapp.domain.model.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -56,10 +55,10 @@ class ProductRemoteRepository (private val dataSource: ProductDataSource): Produ
         }
     }
 
-    override suspend fun clear(token: String?, minimalCost: Double?): StorageResult<Deletes> = withContext(Dispatchers.IO) {
+    override suspend fun clear(token: String?, minimalCost: Double?): StorageResult<MultipleDelete> = withContext(Dispatchers.IO) {
         when (val result = dataSource.deleteAll(token,minimalCost)) {
             is StorageResult.Complete -> StorageResult.Complete(
-                    Deletes(result.data?:0)
+                    MultipleDelete(result.data?:0)
             )
             is StorageResult.Failure -> StorageResult.Failure(result.exception)
             else -> StorageResult.UnAuthorized(Exception())
