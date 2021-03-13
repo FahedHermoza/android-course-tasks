@@ -11,8 +11,10 @@ import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.databinding.FragmentProductBinding
 import com.emedinaa.kotlinapp.di.Injector
 import com.emedinaa.kotlinapp.domain.model.Product
+import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.ClearProductUseCase
 import com.emedinaa.kotlinapp.domain.usecase.FetchProductUseCase
+import com.emedinaa.kotlinapp.domain.usecase.UpdateProductUseCase
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModelFactory
 
@@ -22,7 +24,9 @@ class ProductFragment : Fragment() {
     private val viewModel by viewModels<ProductViewModel>{
         ProductViewModelFactory(
             FetchProductUseCase(Injector.provideProductRepository()),
-            ClearProductUseCase(Injector.provideProductRepository())
+            ClearProductUseCase(Injector.provideProductRepository()),
+            AddProductUseCase(Injector.provideProductRepository()),
+            UpdateProductUseCase(Injector.provideProductRepository())
         )
     }
 
