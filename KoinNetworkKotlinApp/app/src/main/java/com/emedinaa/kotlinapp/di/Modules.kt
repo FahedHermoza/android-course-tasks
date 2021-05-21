@@ -39,10 +39,7 @@ val repositoryModule = module {
 
     single<ProductDataSource>{ ProductRemoteDataSource() }
     single<ProductRepository>{ ProductRemoteRepository(get()) }
-
-    //preferences = PreferencesHelper(context)
-    //productPreferencesRepository = ProductPreferencesRespository(preferences)
-
+    
     single { PreferencesHelper(androidContext()) }
     single<ProductSessionRepository>{ ProductPreferencesRespository(get()) }
 }
