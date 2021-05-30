@@ -46,7 +46,7 @@ ext {
     cardviewVersion = '1.0.0'
     materialVersion = '1.2.1'
 
-    junitVersion = '4.+'
+    junitVersion = '4.12'
     extJunitVersion = '1.1.2'
     espressoVersion = '3.3.0'
 
@@ -63,7 +63,11 @@ ext {
     livedataKtx = '2.3.0'
 
     //TODO koin
-    koin_version='2.1.5'
+    koin_version= '2.1.5'
+
+    //TODO mockito
+    mockito_version= '3.2.0'
+    arch_core = '2.1.0'
 }
 
 /*
