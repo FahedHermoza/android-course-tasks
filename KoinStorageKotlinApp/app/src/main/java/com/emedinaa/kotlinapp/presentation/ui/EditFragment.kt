@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.databinding.FragmentEditBinding
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.presentation.viewmodel.ProductViewModel
@@ -15,8 +17,7 @@ class EditFragment : Fragment() {
 
     private val viewModel: ProductViewModel by viewModel()
 
-    private var _binding: FragmentEditBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentEditBinding
 
     private var product: Product? = null
 
@@ -30,9 +31,10 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentEditBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit, container, false)
+        binding.lifecycleOwner = this
+        binding.viewmodel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

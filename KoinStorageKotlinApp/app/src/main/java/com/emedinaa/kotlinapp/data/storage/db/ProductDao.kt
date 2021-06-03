@@ -3,13 +3,14 @@ package com.emedinaa.kotlinapp.data.storage.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface ProductDao {
 
     @Query("SELECT * from table_product")
-    fun products(): LiveData<List<DBProduct>>
+    fun products(): Flow<List<DBProduct>>
 
     @Insert(onConflict = REPLACE)
     suspend fun addProduct(product: DBProduct)

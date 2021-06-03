@@ -9,6 +9,7 @@ import com.emedinaa.kotlinapp.domain.model.Product
 /***
  * https://medium.com/swlh/how-to-use-view-binding-in-recyclerview-adapter-f818b96c678a
  */
+
 class ProductsAdapter(private var products:List<Product>,
                       val itemAction: (item: Product) -> Unit)
     :RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
@@ -46,3 +47,4 @@ class ProductsAdapter(private var products:List<Product>,
     inner class ViewHolder(val binding: ItemProductBinding)
         :RecyclerView.ViewHolder(binding.root)
 }
+

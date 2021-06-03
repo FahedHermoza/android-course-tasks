@@ -3,6 +3,7 @@ package com.emedinaa.kotlinapp.presentation.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -17,8 +18,7 @@ class ProductFragment : Fragment() {
 
     private val viewModel: ProductViewModel by viewModel()
 
-    private var _binding: FragmentProductBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentProductBinding
 
     private lateinit var adapter: ProductsAdapter
 
@@ -32,9 +32,10 @@ class ProductFragment : Fragment() {
     ): View? {
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
-        _binding = FragmentProductBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
+        binding.lifecycleOwner = this
+        binding.viewmodel = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,11 +75,6 @@ class ProductFragment : Fragment() {
         findNavController().navigate(R.id.action_productFragment_to_editFragment, Bundle().apply {
             putSerializable("PRODUCT", product)
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -1,9 +1,6 @@
 package com.emedinaa.kotlinapp.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.emedinaa.kotlinapp.R
 import com.emedinaa.kotlinapp.domain.model.Product
 import com.emedinaa.kotlinapp.domain.usecase.AddProductUseCase
@@ -25,7 +22,7 @@ class ProductViewModel(private val fetchProductUseCase: FetchProductUseCase,
         loadProducts()
     }
 
-    fun loadProducts():LiveData<List<Product>> = fetchProductUseCase.invoke()
+    fun loadProducts():LiveData<List<Product>> = fetchProductUseCase.invoke().asLiveData()
 
     fun addNewProduct(title:String, cost: Double, description: String) = viewModelScope.launch {
         var product = Product(0, title, cost, description, R.mipmap.ic_funko)
