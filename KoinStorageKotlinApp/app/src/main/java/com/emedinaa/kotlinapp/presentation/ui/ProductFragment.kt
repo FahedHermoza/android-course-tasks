@@ -37,20 +37,6 @@ class ProductFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
-        Log.v("LoggingWithTimber", "some verbose logs here");
-        Timber.v("some verbose logs here");
-
-        Log.d("LoggingWithTimber", "some debug logs here");
-        Timber.d("some debug logs here");
-
-        Log.i("LoggingWithTimber", "some info logs here");
-        Timber.i("some info logs here");
-
-        Log.w("LoggingWithTimber", "some warning logs here");
-        Timber.w("some warning logs here");
-
-        Log.e("LoggingWithTimber", "some error logs here");
-        Timber.e("some error logs here");
         return binding.root
     }
 
